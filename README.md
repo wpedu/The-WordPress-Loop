@@ -54,11 +54,11 @@ foreach ( $peopleInLine as $customer => $drink ) {
 
 ### WordPress version of a loop
 
-The WordPress version of the loop can be a little confusing at first due to the use of the function [have_posts()](http://codex.wordpress.org/Function_Reference/have_posts) with in the loops "while()" statement, and the fact that the same function is previously used in the "if()" statement.
+The WordPress version of the loop can be a little confusing at first due to the use of the function [have_posts()](http://codex.wordpress.org/Function_Reference/have_posts) with in the loops **while()** statement, and the fact that the same function is previously used in the **if()** statement.
 
-In short have_posts() iterates the loop one post at a time by returning true if there is post to display.
+In short **have_posts()** iterates the loop one post at a time by returning true if there is post to display.
 
-See the actual code to see how little this function actually does. have_posts() on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3142)
+See the actual code to see how little this function actually does. **have_posts()** on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3142)
 
 ```
 <?php
@@ -96,9 +96,9 @@ WordPress does this with a handful of functions that only work with in the loop.
 
 The wordpress loop works in conjunction with a few globals, but the $post global is the one we will be talking about. _read more about wordpress global at [WordPress Globals](http://codex.wordpress.org/Global_Variables)_
 
-The reason that "loop" function only work with in the loop is that they are tied to the current iteration of $post. The current iteration of $post is set by the function [the_post()](http://codex.wordpress.org/Function_Reference/the_post). 
+The reason that **loop** functions only work with in the loop is that they are tied to the current iteration of **$post**. The current iteration of $post is set by the function [the_post()](http://codex.wordpress.org/Function_Reference/the_post). 
 
-See the code that powers the_post() on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3120)
+_See the code that powers the_post() on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3120)_
 
 ChangeLog
 ====================
