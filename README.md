@@ -245,6 +245,12 @@ echo "</article><!-- #post-## -->";
 ?>
 ```
 
+Other resources
+====================
+- Browse the WordPress core: [phpxref.ftwr.co.uk/wordpress](http://phpxref.ftwr.co.uk/wordpress/)
+- Custom loops will require: [wp_reset_postdata()](http://codex.wordpress.org/Function_Reference/wp_reset_postdata)
+- Custom loops will require: [wp_reset_query()](http://codex.wordpress.org/Function_Reference/wp_reset_query)
+
 ChangeLog
 ====================
 
