@@ -94,17 +94,162 @@ WordPress does this with a handful of functions that only work with in the loop.
 
 ### Why do these only work with in the loop?
 
-The wordpress loop works in conjunction with a few globals, but the $post global is the one we will be talking about. _read more about wordpress global at [WordPress Globals](http://codex.wordpress.org/Global_Variables)_
+The wordpress loop works in conjunction with a few globals, but the $post global is the one we will be talking about. Read more about wordpress global at [WordPress Globals](http://codex.wordpress.org/Global_Variables)
 
-The reason that **loop** functions only work with in the loop is that they are tied to the current iteration of **$post**. The current iteration of $post is set by the function [the_post()](http://codex.wordpress.org/Function_Reference/the_post). 
+The reason that loop functions only work with in the loop is that they are tied to the current iteration of **$post**. The current iteration of **$post** is set by the function **[the_post()](http://codex.wordpress.org/Function_Reference/the_post)**. The function **the\_post()**, in a rather convoluted way, references a larger more comprehensive global named **$wp\_query**. 
 
-_See the code that powers the_post() on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3120)_
+The reason loop functions only work with in the loop is that the global **$post** variable is only populated within the cycle of the loop. Out side of the loop the **$post** variable can not be trusted to give you accurate results.
+
+See the code that powers **the_post()** on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3120)
+
+### How does the_title() and other loop functions get their values?
+
+Functions like **[the_title()](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/post-template.php#L42)** get their values from a combination of other WordPress functions that reference the global variable **$post**.
+
+With in each function like **the_title()** you be able to follow it back to a function that references a global version of the **$post**. 
+
+### Don't access the $post variable directly
+
+Once you find that you have access to the $post variable it will be tempting to access it directly. You may think, why don't I just **echo $post->post_title;** and be done with it. Why use **the\_title()** at all?
+
+Loop functions are designed so plugin authors can hook into them and filter their contents. You may not think that is important, but your theme users will when a plugin they use can not perform it's desired action because you've shortcut the theming process.
+
+An example of a single.php template file and it loop counter part.
+----------
+
+### single.php
+
+```
+<?php
+get_header();
+
+echo "<div id=\"primary\" class=\"content-area\">";
+	echo "<div id=\"content\" class=\"site-content\" role=\"main\">";
+
+		// Start the Loop.
+		while ( have_posts() ) {
+			the_post();
+			
+			
+			get_template_part( 'loop-single' );
+			
+			
+			// Previous/next post navigation.
+			// Don't print empty markup if there's nowhere to navigate.
+			if ( get_adjacent_post( false, '', true ) AND get_adjacent_post( false, '', false ) ) {
+				
+				echo "<nav class=\"navigation post-navigation\" role=\"navigation\">";
+				
+					echo "<h1 class=\"screen-reader-text\">"; 
+						_e( 'Post navigation', 'twentyfourteen' ); 
+					echo "</h1>";
+					
+					echo "<div class=\"nav-links\">";
+						previous_post_link( '%link', __( '<span class="meta-nav">Previous Post</span>%title', 'twentyfourteen' ) );
+						next_post_link( '%link', __( '<span class="meta-nav">Next Post</span>%title', 'twentyfourteen' ) );
+					echo "</div><!-- .nav-links -->";
+					
+				echo "</nav><!-- .navigation -->";
+			} // end if ( $next && $previous )
+			
+			
+			
+			// If comments are open or we have at least one comment, load up the comment template.
+			if ( comments_open() OR get_comments_number() ) {
+				comments_template();
+			}
+			
+			
+		} // end while ( have_posts() )
+		
+	echo "</div><!-- #content -->";
+	
+echo "</div><!-- #primary -->";
+
+get_sidebar( 'content' );
+get_sidebar();
+get_footer();
+?>
+```
+
+### loop-single.php
+
+```
+<?php
+echo "<article id=\"post-"; the_ID(); echo "\""; post_class(); echo ">";
+	
+	if ( has_post_thumbnail() ) {
+		echo "<div class=\"post-thumbnail\">";
+			the_post_thumbnail();
+		echo "</div>";
+	}
+
+	echo "<header class=\"entry-header\">";
+		
+		// Add Category list
+		if ( in_array( 'category', get_object_taxonomies( get_post_type() ) ) AND twentyfourteen_categorized_blog() ) {
+			echo "<div class=\"entry-meta\">";
+				echo "<span class=\"cat-links\">" . get_the_category_list( _x( ', ', 'Used between list items, there is a space after the comma.', 'twentyfourteen' ) ) . "</span>";
+			echo "</div>";
+		}
+		
+		
+		// The title
+		the_title( '<h1 class="entry-title">', '</h1>' );
+		
+		
+		// post meta data
+		echo "<div class=\"entry-meta\">";
+			
+			// Set up and print post meta information.
+			echo "<span class=\"entry-date\">";
+				echo "<a href=\"" . esc_url( get_permalink() ) . "\" rel=\"bookmark\">";
+					echo "<time class=\"entry-date\" datetime=\"" . esc_attr( get_the_date( 'c' ) ) . "\">" . esc_attr( get_the_date() ) . "</time>";
+				echo "</a>";
+			echo "</span>";
+			echo "<span class=\"byline\">";
+				echo "<span class=\"author vcard\">";
+					echo "<a class=\"url fn n\" href=\"" . esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ) . "\" rel=\"author\">" . get_the_author() . "</a>";
+				echo "</span>";
+			echo "</span>";
+			
+			
+			// Comments
+			if ( ! post_password_required() AND ( comments_open() OR get_comments_number() ) ) {
+				
+				echo "<span class=\"comments-link\">";
+					comments_popup_link( __( 'Leave a comment', 'twentyfourteen' ), __( '1 Comment', 'twentyfourteen' ), __( '% Comments', 'twentyfourteen' ) );
+				echo "</span>";
+				
+			} // end comments
+			
+			
+			// Edit post
+			edit_post_link( __( 'Edit', 'twentyfourteen' ), '<span class="edit-link">', '</span>' );
+			
+		echo "</div><!-- .entry-meta -->";
+	echo "</header><!-- .entry-header -->";
+	
+	
+	// Post content
+	echo "<div class=\"entry-content\">";
+		the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ) );
+	echo "</div><!-- .entry-content -->";
+	
+	
+	// Display Tags
+	the_tags( '<footer class="entry-meta"><span class="tag-links">', '', '</span></footer>' );
+	
+	
+echo "</article><!-- #post-## -->";
+?>
+```
 
 ChangeLog
 ====================
 
 ### 02.11.14 - 1.0.1
-- continuation of loop explination
+- continuation of loop explanation
 
 ### 02.09.14 - 1.0.0
 - initial commit
