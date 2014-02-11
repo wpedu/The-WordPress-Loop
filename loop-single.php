@@ -70,12 +70,6 @@ echo "<article id=\"post-"; the_ID(); echo "\""; post_class(); echo ">";
 	// Post content
 	echo "<div class=\"entry-content\">";
 		the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyfourteen' ) );
-		wp_link_pages( array(
-			'before' => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'twentyfourteen' ) . '</span>',
-			'after' => '</div>',
-			'link_before' => '<span>',
-			'link_after' => '</span>',
-		) );
 	echo "</div><!-- .entry-content -->";
 	
 	

@@ -19,8 +19,35 @@ We will be covering the following functions and variables.
 The Loop
 ------------------
 
-- What is a loop
-- WordPress version of a loop
+### What is a loop
+
+A loop is a repeating cycle which runs a block of code for a set number of cycles or each item in an array. The [WordPress loop](http://codex.wordpress.org/The_Loop) is a "[while](http://www.php.net/manual/en/control-structures.while.php)" loop so it is set to run a set number of cycles, which is set by the [posts_per_page](http://codex.wordpress.org/Class_Reference/WP_Query#Pagination_Parameters) parameter. 
+
+### WordPress version of a loop
+
+The WordPress version of the loop can be a little confusing at first due to their use of functions with in the loops "while()" statement and the fact that the same function is previously used in the "if()" statement as well.
+
+
+
+```
+<?php
+
+if ( have_posts() ) {
+	
+	while ( have_posts() ) {
+		the_post();
+		
+		// ..loop code here
+		the_title();
+		the_content();
+		
+	}
+	
+}
+
+?>
+```
+
 - Accessing loop variables
 - $wp_query global
 - $post global

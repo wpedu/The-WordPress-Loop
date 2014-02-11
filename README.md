@@ -22,6 +22,9 @@ The WordPress loop is only magical until you grasp the moving parts. In this pre
 ChangeLog
 ====================
 
+### 02.11.14 - 1.0.1
+- continuation of loop explination
+
 ### 02.09.14 - 1.0.0
 - initial commit
 - added single template and loop-single
