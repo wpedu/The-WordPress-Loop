@@ -1,6 +1,8 @@
 The WordPress Loop Presentation
 ==================
 
+This repository is a ChildTheme for twentyfourteen, and a presentation tool for an explanation of the WordPress loop. You may download and install this theme to see it in action.
+
 ### Title: The WordPress Loop Demystified
 
 ##### Description
@@ -114,8 +116,10 @@ Once you find that you have access to the $post variable it will be tempting to 
 
 Loop functions are designed so plugin authors can hook into them and filter their contents. You may not think that is important, but your theme users will when a plugin they use can not perform it's desired action because you've shortcut the theming process.
 
-An example of a single.php template file and it loop counter part.
+An example of a single post template file
 ----------
+
+These files are pulled directly from this presentation / repository.
 
 ### single.php
 
