@@ -11,7 +11,3 @@ Description: WP301 Child Theme
 #################################################################################################### */
 
 @import '../twentyfourteen/style.css';
-
-/*.post-thumbnail,
-a.post-thumbnail:hover { background:#000; }
-a.post-thumbnail:hover img { opacity:1; }*/
