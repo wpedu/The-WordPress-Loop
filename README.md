@@ -7,6 +7,8 @@ This repository is a ChildTheme for twentyfourteen, and a presentation tool for 
 
 - [Slides Show](https://docs.google.com/presentation/d/1znrebrif3FeHzfumGwjkgXf1jlK1BS91FQJkF-i_2TU/pub?start=false&loop=false&delayms=3000)
 
+<iframe src="https://docs.google.com/presentation/d/1znrebrif3FeHzfumGwjkgXf1jlK1BS91FQJkF-i_2TU/embed?start=false&loop=false&delayms=3000" frameborder="0" width="100%" height="480" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+
 ##### Description
 The WordPress loop is only magical until you grasp the moving parts. In this presentation we'll uncover the gears that keep the loop running and how to access it mystical powers. Here are a few functions and variable we'll cover: 
 
