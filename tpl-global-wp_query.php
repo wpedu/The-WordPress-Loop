@@ -1,7 +1,7 @@
 <?php
-/* Template Name: See Globall $post Variable */
+/* Template Name: See Globall $wp_query Variable */
 /**
- * File Name tmp-global-post.php
+ * File Name tpl-global-wp_query.php
  * @package the-wp-loop-demystified
  * @license GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @version 1.0.0
@@ -14,5 +14,4 @@ if ( ! is_user_logged_in() OR ! current_user_can('install_themes') ) {
 	wp_die('Sorry no go!');
 }
 
-the_post();
-print_r($post);
+print_r($wp_query);

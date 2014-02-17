@@ -30,7 +30,7 @@ The Loop
 
 ### 01. What is a loop
 
-A loop is a repeating cycle which runs a block of code for a set number of cycles or each item in an array. The [WordPress loop](http://codex.wordpress.org/The_Loop) is a **[while](http://www.php.net/manual/en/control-structures.while.php)** loop so it is set to run a set number of cycles, which is set by the [posts_per_page](http://codex.wordpress.org/Class_Reference/WP_Query#Pagination_Parameters) parameter. 
+A loop is a repeating process which runs a block of code for each item in an array. The [WordPress loop](http://codex.wordpress.org/The_Loop) is a **[while](http://www.php.net/manual/en/control-structures.while.php)** loop so it is set to run a set number of cycles, which is set by the [posts_per_page](http://codex.wordpress.org/Class_Reference/WP_Query#Pagination_Parameters) parameter. 
 
 ### 02. Real world examples of a loop
 
@@ -83,7 +83,7 @@ if ( have_posts() ) {
 
 ### 04. Accessing loop variables
 
-The purpose of the WordPress style loop is to make it easy to display the most basic content for each post or page in a standardized method. This method allows all theme to retain relative similarities. 
+The purpose of the WordPress style loop is to make it easy to display the most basic content for each post or page in a standardized method. This method allows all themes to retain relative similarities.
 
 WordPress does this with a handful of functions that only work with in the loop. 
 
@@ -94,27 +94,32 @@ WordPress does this with a handful of functions that only work with in the loop.
 - [the_tags()](http://codex.wordpress.org/Function_Reference/the_tags)
 - [more related functions](http://codex.wordpress.org/Function_Reference/post_class#Related)
 
-### 05. Why do these only work with in the loop?
+### 05. Why do these functions only work with in the loop?
 
 The wordpress loop works in conjunction with a few globals, but the $post global is the one we will be talking about. Read more about wordpress global at [WordPress Globals](http://codex.wordpress.org/Global_Variables)
 
-The reason that loop functions only work with in the loop is that they are tied to the current iteration of **$post**. The current iteration of **$post** is set by the function **[the_post()](http://codex.wordpress.org/Function_Reference/the_post)**. The function **the\_post()**, in a rather convoluted way, references a larger more comprehensive global named **$wp\_query**. 
-
-The reason loop functions only work with in the loop is that the global **$post** variable is only populated within the cycle of the loop. Out side of the loop the **$post** variable can not be trusted to give you accurate results.
+The reason loop functions only work with in the loop is that they are tied to the current iteration of **$post**, and using them outside the loop will produce unexpected results. The global **$post** variable is only guarnteed to be populated properly within the cycle of the loop.
 
 See the code that powers **the_post()** on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3120)
 
-### 06. How does the_title() and other loop functions get their values?
+### 06. How do functions like the_title() receive their values?
 
 Functions like **[the_title()](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/post-template.php#L42)** get their values from a combination of other WordPress functions that reference the global variable **$post**.
 
-With in each function like **the_title()** you be able to follow it back to a function that references a global version of the **$post**. 
+With in each function such as **the_title()** you be able to trace it's roots back to a global version of the **$post**. If you were to look at a raw version of the **$post** variable you will see raw post data in an array format.
 
-### 07. Don't access the $post variable directly
+##### Global what? 
 
-Once you find that you have access to the $post variable it will be tempting to access it directly. You may think, why don't I just **echo $post->post_title;** and be done with it. Why use **the\_title()** at all?
+Variable Scope and Globals is completely separate topic so lets not get derailed. If you would like more reading please see these links below.
 
-Loop functions are designed so plugin authors can hook into them and filter their contents. You may not think that is important, but your theme users will when a plugin they use can not perform it's desired action because you've shortcut the theming process.
+- Check out php [Variable Scope](http://www.php.net/manual/en/language.variables.scope.php)
+- Check out [WordPress Global Variables](http://codex.wordpress.org/Global_Variables)
+
+### 07. Do not access the $post variable directly
+
+Once you find that you have access to the $post variable it may be tempting to access it directly. You may think, why don't I just **echo $post->post_title;** and be done with it. Why use **the\_title()** at all?
+
+Loop functions are designed to maintain standardization and access. Using loop functions will guarantee that plugins can hook into your theme properly. You may not think that is important, but your theme users will thank you when their favorite plugin continues to work flawlessly.
 
 An example of a single post template file
 ----------
@@ -257,6 +262,9 @@ Other resources
 
 ChangeLog
 ====================
+
+### 02.17.14 - 1.0.2
+- added link resources to global variables
 
 ### 02.11.14 - 1.0.1
 - continuation of loop explanation
