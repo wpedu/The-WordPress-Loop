@@ -5,6 +5,8 @@ This repository is a ChildTheme for twentyfourteen, and a presentation tool for 
 
 ### Title: The WordPress Loop Demystified
 
+- [Slides Show](https://docs.google.com/presentation/d/1znrebrif3FeHzfumGwjkgXf1jlK1BS91FQJkF-i_2TU/pub?start=false&loop=false&delayms=3000)
+
 ##### Description
 The WordPress loop is only magical until you grasp the moving parts. In this presentation we'll uncover the gears that keep the loop running and how to access it mystical powers. Here are a few functions and variable we'll cover: 
 
