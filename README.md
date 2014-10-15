@@ -266,6 +266,9 @@ Other resources
 ChangeLog
 ====================
 
+### 10.14.14 - 2.0.0
+- white label for cross presentation
+
 ### 02.17.14 - 1.0.2
 - added link resources to global variables
 
