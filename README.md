@@ -32,7 +32,7 @@ The Loop
 
 ### 01. What is a loop
 
-A loop is a repeating process which runs a block of code for each item in an array. The [WordPress loop](http://codex.wordpress.org/The_Loop) is a **[while](http://www.php.net/manual/en/control-structures.while.php)** loop so it is set to run a set number of cycles, which is set by the [posts_per_page](http://codex.wordpress.org/Class_Reference/WP_Query#Pagination_Parameters) parameter. 
+A loop is a repeating process which runs a block of code for each item in an array. The [WordPress loop](http://codex.wordpress.org/The_Loop) is a **[while](http://www.php.net/manual/en/control-structures.while.php)** loop so it is set to run a specific number of cycles, which is set by the [posts_per_page](http://codex.wordpress.org/Class_Reference/WP_Query#Pagination_Parameters) parameter. 
 
 ### 02. Real world examples of a loop
 
@@ -58,11 +58,11 @@ foreach ( $peopleInLine as $customer => $drink ) {
 
 ### 03. WordPress version of a loop
 
-The WordPress version of the loop can be a little confusing at first due to the use of the function [have_posts()](http://codex.wordpress.org/Function_Reference/have_posts) with in the loops **while()** statement, and the fact that the same function is previously used in the **if()** statement.
+The WordPress version of the loop can be a little confusing at first due to the use of the function [have_posts()](http://codex.wordpress.org/Function_Reference/have_posts) within the loops **while()** statement, and the fact that the same function is previously used in the **if()** statement.
 
 In short **have_posts()** iterates the loop one post at a time by returning true if there is post to display.
 
-See the actual code to see how little this function actually does. **have_posts()** on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3142)
+See the actual code to see what little this function actually does. **have_posts()** on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3142)
 
 ```
 <?php
@@ -85,9 +85,9 @@ if ( have_posts() ) {
 
 ### 04. Accessing loop variables
 
-The purpose of the WordPress style loop is to make it easy to display the most basic content for each post or page in a standardized method. This method allows all themes to retain relative similarities.
+The purpose of the WordPress version of a loop is to make it easy to display the most basic content for each post or page in a standardized method. This method allows all themes to maintain relative similarities.
 
-WordPress does this with a handful of functions that only work with in the loop. 
+WordPress accomplishes standardization with a handful of functions that only work with in the loop. 
 
 - [the_title()](http://codex.wordpress.org/Function_Reference/the_title)
 - [the_category()](http://codex.wordpress.org/Function_Reference/the_category)
@@ -98,9 +98,9 @@ WordPress does this with a handful of functions that only work with in the loop.
 
 ### 05. Why do these functions only work with in the loop?
 
-The wordpress loop works in conjunction with a few globals, but the $post global is the one we will be talking about. Read more about wordpress global at [WordPress Globals](http://codex.wordpress.org/Global_Variables)
+The wordpress loop works in conjunction with a few [globals](http://php.net/manual/en/reserved.variables.globals.php). The $post global is the one we will be talking about. Read more about wordpress global at [WordPress Globals](http://codex.wordpress.org/Global_Variables)
 
-The reason loop functions only work with in the loop is that they are tied to the current iteration of **$post**, and using them outside the loop will produce unexpected results. The global **$post** variable is only guarnteed to be populated properly within the cycle of the loop.
+The reason loop functions only work with in the loop is that they are tied to the current iteration of **$post**. The global **$post** variable is only guarnteed to be populated properly within the cycle of the loop.
 
 See the code that powers **the_post()** on [core.trac.wordpress](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/query.php#L3120)
 
@@ -108,18 +108,18 @@ See the code that powers **the_post()** on [core.trac.wordpress](https://core.tr
 
 Functions like **[the_title()](https://core.trac.wordpress.org/browser/tags/3.8.1/src/wp-includes/post-template.php#L42)** get their values from a combination of other WordPress functions that reference the global variable **$post**.
 
-With in each function such as **the_title()** you be able to trace it's roots back to a global version of the **$post**. If you were to look at a raw version of the **$post** variable you will see raw post data in an array format.
+With in each function such as **the_title()** you will be able to trace its roots back to a global version of the **$post**. If you were to look at a raw version of the **$post** variable you will see raw post data in an array format.
 
 ##### Global what? 
 
-Variable Scope and Globals is completely separate topic so lets not get derailed. If you would like more reading please see these links below.
+Variable Scope and Globals are completely separate topics so lets not get derailed. If you would like more reading please see these links below.
 
 - Check out php [Variable Scope](http://www.php.net/manual/en/language.variables.scope.php)
 - Check out [WordPress Global Variables](http://codex.wordpress.org/Global_Variables)
 
 ### 07. Do not access the $post variable directly
 
-Once you find that you have access to the $post variable it may be tempting to access it directly. You may think, why don't I just **echo $post->post_title;** and be done with it. Why use **the\_title()** at all?
+Once you find that you have access to the $post variable it may be tempting to access it directly. You may think, "why not just use **echo $post->post_title;** and be done with it. Why use **the\_title()** at all?
 
 Loop functions are designed to maintain standardization and access. Using loop functions will guarantee that plugins can hook into your theme properly. You may not think that is important, but your theme users will thank you when their favorite plugin continues to work flawlessly.
 
@@ -264,6 +264,9 @@ Other resources
 
 ChangeLog
 ====================
+
+### 10.18.14 - 2.2.0
+- spelling, grammar
 
 ### 10.18.14 - 2.1.0
 - remove example site url
